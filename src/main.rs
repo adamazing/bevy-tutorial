@@ -1,16 +1,29 @@
 use bevy::{prelude::*, render::camera::ScalingMode};
 
-pub const CLEAR: Color = Color::RED;
+pub const CLEAR: Color = Color::rgb(0.1,0.1,0.1);
 pub const RATIO: f32 = 16.0 / 9.0;
 pub const TILE_SIZE: f32 = 0.1;
 
 mod ascii;
+mod combat;
 mod debug;
+mod fadeout;
 mod player;
+mod tilemap;
 
 use ascii::AsciiPlugin;
+use combat::CombatPlugin;
 use debug::DebugPlugin;
+use fadeout::FadeoutPlugin;
 use player::PlayerPlugin;
+use tilemap::TileMapPlugin;
+
+/** Following traits are needed to allow Bevy to use for state machine */
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Copy)]
+pub enum GameState {
+    Overworld,
+    Combat,
+}
 
 struct AppSettings {
     height: f32,
@@ -24,14 +37,15 @@ fn app_config() -> AppSettings {
         height: 600.0,
         // width: 800.0,
         resizable: true,
-        title: "Foo".to_string(),
+        title: "Bevy Tutorial".to_string(),
     };
 }
 
 fn main() {
-    let app_settings = app_config();
+    let app_settings: AppSettings = app_config();
 
     App::new()
+        .add_state(GameState::Overworld)
         .insert_resource(ClearColor(CLEAR))
         .insert_resource(WindowDescriptor {
             width: app_settings.height * RATIO,
@@ -43,8 +57,11 @@ fn main() {
         .add_startup_system(spawn_camera)
         .add_plugins(DefaultPlugins)
         .add_plugin(AsciiPlugin)
+        .add_plugin(CombatPlugin)
+        .add_plugin(FadeoutPlugin)
         .add_plugin(PlayerPlugin)
         .add_plugin(DebugPlugin)
+        .add_plugin(TileMapPlugin)
         .run();
 }
 

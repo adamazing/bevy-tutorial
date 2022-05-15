@@ -10,7 +10,7 @@ impl Plugin for AsciiPlugin {
     }
 }
 
-pub struct AsciiSheet(Handle<TextureAtlas>);
+pub struct AsciiSheet(pub Handle<TextureAtlas>);
 
 pub fn spawn_ascii_sprite(
     commands: &mut Commands,
@@ -19,6 +19,7 @@ pub fn spawn_ascii_sprite(
     color: Color,
     translation: Vec3
     ) -> Entity {
+    assert!(index < 256, "Index out of range");
 
     let mut sprite = TextureAtlasSprite::new(index);
     sprite.color = color;
