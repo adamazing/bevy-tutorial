@@ -8,6 +8,7 @@ mod ascii;
 mod combat;
 mod debug;
 mod fadeout;
+mod gameinput;
 mod player;
 mod tilemap;
 
@@ -15,6 +16,7 @@ use ascii::AsciiPlugin;
 use combat::CombatPlugin;
 use debug::DebugPlugin;
 use fadeout::FadeoutPlugin;
+use gameinput::GameInputPlugin;
 use player::PlayerPlugin;
 use tilemap::TileMapPlugin;
 
@@ -59,6 +61,7 @@ fn main() {
         .add_plugin(AsciiPlugin)
         .add_plugin(CombatPlugin)
         .add_plugin(FadeoutPlugin)
+        .add_plugin(GameInputPlugin)
         .add_plugin(PlayerPlugin)
         .add_plugin(DebugPlugin)
         .add_plugin(TileMapPlugin)

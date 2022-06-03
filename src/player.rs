@@ -132,19 +132,19 @@ fn player_movement(
 
     // Calculate the delta in the `y` direction.
     let mut y_delta: f32 = 0.0;
-    if keyboard.pressed(KeyCode::W) {
+    if keyboard.pressed(KeyCode::W) || keyboard.pressed(KeyCode::Up) {
         y_delta += player.move_speed * TILE_SIZE * time.delta_seconds();
     }
-    if keyboard.pressed(KeyCode::S) {
+    if keyboard.pressed(KeyCode::S) || keyboard.pressed(KeyCode::Down) {
         y_delta -= player.move_speed * TILE_SIZE * time.delta_seconds();
     }
 
     // Calculate the delta in the `x` direction.
     let mut x_delta: f32 = 0.0;
-    if keyboard.pressed(KeyCode::A) {
+    if keyboard.pressed(KeyCode::A) || keyboard.pressed(KeyCode::Left){
         x_delta -= player.move_speed * TILE_SIZE * time.delta_seconds();
     }
-    if keyboard.pressed(KeyCode::D) {
+    if keyboard.pressed(KeyCode::D) || keyboard.pressed(KeyCode::Right){
         x_delta += player.move_speed * TILE_SIZE * time.delta_seconds();
     }
 

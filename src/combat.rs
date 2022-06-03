@@ -16,7 +16,9 @@ impl Plugin for CombatPlugin {
             .with_system(spawn_enemy)
             .with_system(combat_camera)
         )
-        .add_system_set(SystemSet::on_exit(GameState::Combat).with_system(despawn_enemy));
+        .add_system_set(
+            SystemSet::on_exit(GameState::Combat).with_system(despawn_enemy)
+        );
     }
 }
 
@@ -44,6 +46,7 @@ fn spawn_enemy(mut commands: Commands, ascii: Res<AsciiSheet>) {
 
 fn despawn_enemy(mut commands: Commands, enemy_query: Query<Entity, With<Enemy>>) {
     for entity in enemy_query.iter() {
+        print!("Despawning Enemy {:?}",entity);
         commands.entity(entity).despawn_recursive();
     }
 }
@@ -54,6 +57,7 @@ fn test_exit_combat(
     ascii: Res<AsciiSheet>
 ) {
     if keyboard.just_pressed(KeyCode::Space) {
+        print!("Transition to Overworld State");
         create_fadeout(&mut commands, Some(GameState::Overworld), &ascii);
     }
 }
